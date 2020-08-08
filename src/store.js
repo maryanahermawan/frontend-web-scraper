@@ -9,6 +9,28 @@ const authenticationReducer = (state = { isAuthenticated: false, accessToken: nu
                 isAuthenticated: true,
                 accessToken: action.payload.accessToken,
             }
+        case 'REDDIT_SAVE_BASIC_INFO':
+            console.log("subreddit array is", action.payload.basicInfo.SubredditSubscription.Data.Children)
+            return {
+                ...state,
+                redditUsername: action.payload.basicInfo.Name,
+                subredditArray: action.payload.basicInfo.SubredditSubscription.Data.Children.map(e => ({
+                    URL: e.Data.URL,
+                    description_html: e.Data.public_description_html,
+                })),
+            }
+        case 'REDDIT_LISTINGS':
+            console.log("Subreddit listings are ", action.payload.subredditListings)
+            console.log("Data is", action.payload.subredditListings[0].data.Data)
+            return {
+                ...state,
+                subredditArray: state.subredditArray.map(sr => ({
+                    ...sr,
+                    subredditTopListings: action.payload.subredditListings.find(
+                        arrayel => arrayel.data.Data.Children[0]['Data']['Subreddit'] === sr.URL.replace(/\/r\/|\//g, '')
+                    ).data.Data.Children
+                }))
+            }
         // case 'TOGGLE_TODO':
         //     return state.map(todo =>
         //         todo.id === action.id ? { ...todo, completed: !todo.completed } : todo

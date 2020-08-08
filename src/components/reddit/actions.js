@@ -5,3 +5,15 @@ export const redditLoginSuccessful = accessToken => ({
     accessToken
   }
 })
+
+export const redditBasicInfo = basicInfo => ({
+  type: 'REDDIT_SAVE_BASIC_INFO',
+  payload: {
+    basicInfo
+  }
+})
+
+export const redditListings = subredditListings => ({
+  type: 'REDDIT_LISTINGS',
+  payload: { subredditListings }
+})

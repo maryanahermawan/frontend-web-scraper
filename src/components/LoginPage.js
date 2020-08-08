@@ -76,8 +76,9 @@ export class LoginPage extends React.Component {
     render() {
         return (
             <div>
-                <h1>Welcome! Please login to continue.</h1>
-
+                <br></br><br></br>
+                <h6>Please login to continue</h6>
+                <br></br>
                 <Button variant="outline-primary" className="btn-outline-primary" onClick={this.handleClick}>
                     <div>
                         <Image src={SnooIcon} style={{width: 30, height: 'auto', padding: 5}}/>
