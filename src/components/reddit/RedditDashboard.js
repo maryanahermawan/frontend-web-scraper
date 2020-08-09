@@ -33,7 +33,7 @@ class RedditDashboard extends React.Component {
     }
 
     async getRedditData() {
-        const basicInfoResponse = await axios.get("http://localhost:8080/reddit_basic_info", {
+        const basicInfoResponse = await axios.get(process.env.REACT_APP_API_URL + "/reddit_basic_info", {
             headers: {
                 'access-token': this.props.accessToken
             }
@@ -45,7 +45,7 @@ class RedditDashboard extends React.Component {
         let promiseArray = []
         this.props.subredditArray.forEach(sr => {
             let subredditName = sr.URL.replace(/\/r\/|\//g, '')
-            promiseArray.push(axios.get(`http://localhost:8080/reddit/top?subreddit=${subredditName}&period=week&count=3`,
+            promiseArray.push(axios.get(`${process.env.REACT_APP_API_URL}/reddit/top?subreddit=${subredditName}&period=week&count=3`,
                 {
                     headers: {
                         'access-token': this.props.accessToken
@@ -63,7 +63,7 @@ class RedditDashboard extends React.Component {
                 <Carousel>
                     {
                         this.props.subredditArray && this.props.subredditArray.map((el, index) => {
-                            const randomInt = Math.floor(Math.random(0,1)*10)
+                            const randomInt = Math.floor(Math.random(0, 1) * 10)
                             return (
                                 <Carousel.Item>
                                     <img
@@ -78,9 +78,9 @@ class RedditDashboard extends React.Component {
                                             return (
                                                 <div>
                                                     <h6>Title: {listing.Data.Title}</h6>
-                                                    <div dangerouslySetInnerHTML={htmlDecode(listing.Data.selftext_html)} /> 
+                                                    <div dangerouslySetInnerHTML={htmlDecode(listing.Data.selftext_html)} />
                                                     <p><a href={listing.Data.URL}>{listing.URL}</a></p>
-                                                    <hr/><br></br>
+                                                    <hr /><br></br>
                                                 </div>
                                             )
                                         })}
