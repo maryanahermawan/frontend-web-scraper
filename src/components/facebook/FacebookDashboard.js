@@ -1,7 +1,7 @@
 /*global FB*/
 import React from 'react';
-
-export class FacebookDashboard extends React.Component {
+import { connect } from 'react-redux'
+class FacebookDashboard extends React.Component {
     constructor(props) {
         super(props);
         this.state = {};
@@ -78,3 +78,12 @@ export class FacebookDashboard extends React.Component {
         )
     }
 }
+const mapStateToProps = state => {
+    return {
+        ...state.redditReducer
+    };
+};
+
+export default connect(
+    mapStateToProps
+)(FacebookDashboard)

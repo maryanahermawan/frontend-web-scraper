@@ -9,12 +9,12 @@ import { htmlDecode } from '../../helpers';
 class RedditDashboard extends React.Component {
     constructor(props) {
         super(props);
-        this.props = {
-            isAuthenticated: false,
-            accessToken: null,
-            redditUsername: null,
-            subredditArray: [],
-        }
+        // this.props = {
+        //     isAuthenticated: false,
+        //     accessToken: null,
+        //     redditUsername: null,
+        //     subredditArray: [],
+        // }
         this.getRedditData = this.getRedditData.bind(this)
     }
 
@@ -30,16 +30,6 @@ class RedditDashboard extends React.Component {
         if (prevProps.isAuthenticated === false) {
             this.getRedditData();
         }
-        // .then(resp => {
-        //     
-        //     
-        //     return 
-        // })
-        // .then(resp => {
-        //     console.log("subreddit top listing is", resp.data)
-        //     )
-        // })
-        // .catch(err => console.error(err))
     }
 
     async getRedditData() {
@@ -73,22 +63,24 @@ class RedditDashboard extends React.Component {
                 <Carousel>
                     {
                         this.props.subredditArray && this.props.subredditArray.map((el, index) => {
+                            const randomInt = Math.floor(Math.random(0,1)*10)
                             return (
-                                <Carousel.Item className="container">
+                                <Carousel.Item>
                                     <img
-                                        src="https://picsum.photos/800/400"
+                                        src={require(`../../assets/carousel-wallpaper/${randomInt}.jpg`)}
+                                        width="800" height="400"
                                         alt="Listing slide"
                                     />
                                     <Carousel.Caption className="vertical-center">
                                         <h6>{el.URL}</h6>
+                                        <br></br><br></br>
                                         {el.subredditTopListings && el.subredditTopListings.map((listing, index) => {
                                             return (
                                                 <div>
                                                     <h6>Title: {listing.Data.Title}</h6>
-                                                    <br></br>
                                                     <div dangerouslySetInnerHTML={htmlDecode(listing.Data.selftext_html)} /> 
                                                     <p><a href={listing.Data.URL}>{listing.URL}</a></p>
-                                                    <hr/>
+                                                    <hr/><br></br>
                                                 </div>
                                             )
                                         })}
@@ -106,7 +98,7 @@ class RedditDashboard extends React.Component {
 
 const mapStateToProps = state => {
     return {
-        ...state.authenticationReducer
+        ...state.redditReducer
     };
 };
 

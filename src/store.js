@@ -1,15 +1,17 @@
 import { configureStore } from '@reduxjs/toolkit'
-import { combineReducers } from 'redux'
+import { combineReducers } from 'redux';
+export const REDDIT_LOGIN_SUCCESSFUL = 'REDDIT_LOGIN_SUCCESSFUL';
+export const REDDIT_SAVE_BASIC_INFO = 'REDDIT_SAVE_BASIC_INFO';
 
-const authenticationReducer = (state = { isAuthenticated: false, accessToken: null }, action) => {
+const redditReducer = (state = { isAuthenticated: false, accessToken: null }, action) => {
     switch (action.type) {
-        case 'REDDIT_LOGIN_SUCCESSFUL':
+        case REDDIT_LOGIN_SUCCESSFUL:
             return {
                 ...state,
                 isAuthenticated: true,
                 accessToken: action.payload.accessToken,
             }
-        case 'REDDIT_SAVE_BASIC_INFO':
+        case REDDIT_SAVE_BASIC_INFO:
             console.log("subreddit array is", action.payload.basicInfo.SubredditSubscription.Data.Children)
             return {
                 ...state,
@@ -46,7 +48,7 @@ const authenticationReducer = (state = { isAuthenticated: false, accessToken: nu
 
 // Use ES6 object literal shorthand syntax to define the object shape
 const rootReducer = combineReducers({
-    authenticationReducer,
+    redditReducer,
     //   firstNamedReducer,
     //   secondNamedReducer
 })

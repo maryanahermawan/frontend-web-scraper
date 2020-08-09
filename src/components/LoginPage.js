@@ -4,8 +4,9 @@ import axios from 'axios';
 import Button from 'react-bootstrap/Button';
 import Image from 'react-bootstrap/Image';
 import SnooIcon from '../assets/snoo.png';
+import { connect } from 'react-redux';
 
-export class LoginPage extends React.Component {
+class LoginPage extends React.Component {
     constructor(props) {
         super(props);
         this.handleClick = this.handleClick.bind(this)
@@ -74,23 +75,39 @@ export class LoginPage extends React.Component {
     }
 
     render() {
-        return (
-            <div>
-                <br></br><br></br>
-                <h6>Please login to continue</h6>
-                <br></br>
-                <Button variant="outline-primary" className="btn-outline-primary" onClick={this.handleClick}>
-                    <div>
-                        <Image src={SnooIcon} style={{width: 30, height: 'auto', padding: 5}}/>
+        if (this.props.isAuthenticated) {
+            return (
+                <div><br></br><br></br><h6>You're logged into Reddit</h6></div>
+            )
+        } else {
+            return (
+                <div>
+                    <br></br><br></br>
+                    <h6>Please login to continue</h6>
+                    <br></br>
+                    <Button variant="outline-primary" className="btn-outline-primary" onClick={this.handleClick}>
+                        <div>
+                            <Image src={SnooIcon} style={{ width: 30, height: 'auto', padding: 5 }} />
                         Login via Reddit
                     </div>
-                </Button>
-                {/* <div className="fb-login-button" data-size="large" data-button-type="login_with" data-layout="rounded"
+                    </Button>
+                    {/* <div className="fb-login-button" data-size="large" data-button-type="login_with" data-layout="rounded"
                     data-scope="public_profile"
                     data-auto-logout-link="false" data-use-continue-as="true" data-width=""
                 ></div> */}
-            </div >
-        )
+                </div >
+            )
+        }
     }
+
 }
 
+const mapStateToProps = state => {
+    return {
+        ...state.redditReducer
+    };
+};
+
+export default connect(
+    mapStateToProps
+)(LoginPage)

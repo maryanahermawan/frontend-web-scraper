@@ -46,21 +46,20 @@ body {
   color: yellow;
 }
 
-@keyframes App-logo-spin {
+.vertical-center.carousel-caption {
+  top: 0%;
+  color: navy;
+}
+
+.vertical-center.carousel-caption hr {
+  width: 25% ;
+}
+
+/* @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
   }
   to {
     transform: rotate(360deg);
   }
-}
-
-.container {
-  position: relative;
-}
-
-.vertical-center {
-  position: absolute;
-  top: 10%;
-
-}
+} */
