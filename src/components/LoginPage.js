@@ -67,8 +67,14 @@ class LoginPage extends React.Component {
 
     handleClick() {
         console.log("login is clicked")
-        axios.get(process.env.REACT_APP_API_URL + "/reddit/authenticate")
+        axios.get(process.env.REACT_APP_API_URL + "/reddit/authenticate", {
+            headers: {
+                'Accept': 'text/plain'
+            }
+        })
             .then(resp => {
+                console.log("Response data is", resp.data)
+                // this.setState({ redirect: resp.data });
                 window.location = resp.data
             })
             .catch(err => console.error(err))

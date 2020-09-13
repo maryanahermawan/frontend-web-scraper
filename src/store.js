@@ -22,15 +22,13 @@ const redditReducer = (state = { isAuthenticated: false, accessToken: null }, ac
                 })),
             }
         case 'REDDIT_LISTINGS':
-            console.log("Subreddit listings are ", action.payload.subredditListings)
-            console.log("Data is", action.payload.subredditListings[0].data.Data)
             return {
                 ...state,
                 subredditArray: state.subredditArray.map(sr => ({
                     ...sr,
-                    subredditTopListings: action.payload.subredditListings.find(
-                        arrayel => arrayel.data.Data.Children[0]['Data']['Subreddit'] === sr.URL.replace(/\/r\/|\//g, '')
-                    ).data.Data.Children
+                    subredditTopListings: action.payload.subredditListings.data.find(
+                        arrayel => arrayel.Data.Children[0]['Data']['Subreddit'] === sr.URL.replace(/\/r\/|\//g, '')
+                    ).Data.Children
                 }))
             }
         // case 'TOGGLE_TODO':

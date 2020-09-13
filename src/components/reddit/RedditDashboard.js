@@ -42,19 +42,20 @@ class RedditDashboard extends React.Component {
         console.log("After updating redux basic info, props are", this.props.redditUsername, this.props.subredditArray)
 
         //get top listings:
-        let promiseArray = []
-        this.props.subredditArray.forEach(sr => {
-            let subredditName = sr.URL.replace(/\/r\/|\//g, '')
-            promiseArray.push(axios.get(`${process.env.REACT_APP_API_URL}/reddit/top?subreddit=${subredditName}&period=week&count=3`,
-                {
-                    headers: {
-                        'access-token': this.props.accessToken
-                    }
-                }))
+        const srArray = this.props.subredditArray.map(sr => {
+            return sr.URL.replace(/\/r\/|\//g, '')
         })
-        const listingsData = await Promise.all(promiseArray)
-        this.props.dispatch(redditListings(listingsData))
-        console.log("Listings obtained is", listingsData)
+        axios.get(`${process.env.REACT_APP_API_URL}/reddit/top?subreddit=${srArray.join(",")}&period=week&count=3`,
+        {
+            headers: {
+                'access-token': this.props.accessToken
+            }
+        }).then(resp => {
+            this.props.dispatch(redditListings(resp))
+        }).catch(err => {
+            console.log("Error retrieving reddit listing:", err)
+        })
+        // const listingsData = await Promise.all(promiseArray)
     }
 
     render() {
@@ -78,7 +79,7 @@ class RedditDashboard extends React.Component {
                                             return (
                                                 <div>
                                                     <h6>Title: {listing.Data.Title}</h6>
-                                                    <div dangerouslySetInnerHTML={htmlDecode(listing.Data.selftext_html)} />
+                                                    <div dangerouslySetInnerHTML={htmlDecode(listing.Data.Selftext)} />
                                                     <p><a href={listing.Data.URL}>{listing.URL}</a></p>
                                                     <hr /><br></br>
                                                 </div>
