@@ -69,7 +69,7 @@ class RedditDashboard extends React.Component {
                                 <Carousel.Item>
                                     <img
                                         src={require(`../../assets/carousel-wallpaper/${randomInt}.jpg`)}
-                                        width="800" height="400"
+                                        width="1200" height="600"
                                         alt="Listing slide"
                                     />
                                     <Carousel.Caption className="vertical-center">
